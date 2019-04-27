@@ -85,7 +85,7 @@ echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 echo "Configure openssh conf... "
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
-sed -i '/Port 22/a Port 2020' /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 143' /etc/ssh/sshd_config
 service ssh restart
 echo -e "[${green}DONE${noclr}]"
 
@@ -96,7 +96,7 @@ echo -e "[${green}DONE${noclr}]"
 
 echo "Configure dropbear conf... "
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=4343/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=442/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 service ssh restart
@@ -239,6 +239,7 @@ acl VPS dst $ipaddr/32
 
 # squid Port
 http_port 3128
+http_port 8080
 
 # Minimum configuration.
 http_access allow VPS
@@ -261,7 +262,7 @@ echo -e "[${green}DONE${noclr}]"
 
 # badvpn-udpgw
 echo -n "Downloading badvpn package from source..."
-wget -O /usr/bin/badvpn-udpgw "https://github.com/ndiey/Packages/raw/master/badvpn-udpgw"
+wget -O /usr/bin/badvpn-udpgw "https://github.com/sahrulputra/auto/master/badvpn-udpgw"
 echo -e "[${green}DONE${noclr}]"
 
 echo -n "Configure badvpn package... "
@@ -289,7 +290,7 @@ client = no
 
 [dropbear]
 accept = $ipaddr:443
-connect = 127.0.0.1:4343
+connect = 127.0.0.1:442
 cert = /etc/stunnel/stunnel.pem
 EOF
 
@@ -347,18 +348,18 @@ iptables-restore < /etc/iptables.up.rules
 echo -e "[${green}DONE${noclr}]"
 
 # command script
-wget -O /usr/local/bin/menu "/root/Debian-9/functions/main_menu.sh"
-wget -O /usr/local/bin/01 "/root/Debian-9/functions/trial_account.sh"
-wget -O /usr/local/bin/02 "/root/Debian-9/functions/create_account.sh"
-wget -O /usr/local/bin/03 "/root/Debian-9/functions/renew_account.sh"
-wget -O /usr/local/bin/04 "/root/Debian-9/functions/change_password.sh"
-wget -O /usr/local/bin/05 "/root/Debian-9/functions/lock_account.sh"
-wget -O /usr/local/bin/06 "/root/Debian-9/functions/unlock_account.sh"
-wget -O /usr/local/bin/07 "/root/Debian-9/functions/delete_account.sh"
-wget -O /usr/local/bin/08 "/root/Debian-9/functions/list_account.sh" #Error!
-wget -O /usr/local/bin/09 "/root/Debian-9/functions/online_account.sh" #Error!
-wget -O /usr/local/bin/10 "/root/Debian-9/functions/speedtest_cli.py"
-wget -O /usr/local/bin/11 "/root/Debian-9/functions/system_info.sh"
+wget -O /usr/local/bin/menu "/root/auto/master/main_menu.sh"
+wget -O /usr/local/bin/01 "/root/auto/master/trial_account.sh"
+wget -O /usr/local/bin/02 "/root/auto/master/create_account.sh"
+wget -O /usr/local/bin/03 "/root/auto/master/renew_account.sh"
+wget -O /usr/local/bin/04 "/root/auto/master/change_password.sh"
+wget -O /usr/local/bin/05 "/root/auto/master/lock_account.sh"
+wget -O /usr/local/bin/06 "/root/auto/master/unlock_account.sh"
+wget -O /usr/local/bin/07 "/root/auto/master/delete_account.sh"
+wget -O /usr/local/bin/08 "/root/auto/master/list_account.sh" #Error!
+wget -O /usr/local/bin/09 "/root/auto/master/online_account.sh" #Error!
+wget -O /usr/local/bin/10 "/root/auto/master/speedtest_cli.py"
+wget -O /usr/local/bin/11 "/root/auto/master/system_info.sh"
 
 chmod +x /usr/local/bin/menu
 chmod +x /usr/local/bin/01
